@@ -48,7 +48,7 @@ nc -lvnp 4444
 |-----------------|----------------------------------------|
 | SSH Port        | 2222 (Key-based auth only)             |
 | Web App Port    | 5000                                   |
-| Vulnerable User | `jerry` (Password: `password123`)      |
+| Vulnerable User | `jerry` (Password: `ynm777!2`)      |
 | Root Password   | `zm6Y5413sfFa`                         |
 
 ## 📝 Notes
