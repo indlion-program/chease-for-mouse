@@ -1,0 +1,18 @@
+from flask import Flask, render_template, request, redirect, session
+
+app = Flask(__name__)
+app.secret_key = 'mysecret'
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.form['username'] == 'jerry' and request.form['password'] == 'ymn777!2':
+            session['user'] = 'jerry'
+            return redirect('/')
+        return 'Invalid login'
+    return render_template('login.html')
+

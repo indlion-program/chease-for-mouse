@@ -1,0 +1,37 @@
+FROM ubuntu:latest
+
+# Update and install required packages
+RUN apt-get update && apt-get install -y openssh-server python3 python3-pip python3-venv && apt-get clean
+
+# Create and activate a virtual environment
+RUN python3 -m venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
+
+# 2. Flask app
+WORKDIR /app
+COPY ./app /app
+RUN pip install flask
+
+# 3. Create users and passwords
+RUN useradd -m jerry && \
+    echo "root:zm6Y5413sfFa" | chpasswd
+
+# 4. SSH Key Setup for jerry
+RUN mkdir -p /home/jerry/.ssh
+COPY jerry_id_rsa.pub /home/jerry/.ssh/authorized_keys
+RUN chown -R jerry:jerry /home/jerry/.ssh && \
+    chmod 700 /home/jerry/.ssh && \
+    chmod 600 /home/jerry/.ssh/authorized_keys
+
+# 5. Disable password login in SSH
+RUN sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?UsePAM.*/UsePAM no/' /etc/ssh/sshd_config
+
+# 6. Expose ports
+EXPOSE 22 5000
+
+# 7. Start SSH + Flask
+CMD service ssh start && python3 /app/main.py
+
