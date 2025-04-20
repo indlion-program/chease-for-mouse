@@ -1,7 +1,5 @@
 
-```markdown
-![Lab Screenshot](./app/static/IMG-20250419-WA0054.jpg)
-```
+![Lab Screenshot](/app/static/IMG-20250419-WA0054.jpg)
 
 # 🔥 Privilege Escalation Lab - Docker Edition
 
