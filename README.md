@@ -17,6 +17,19 @@ docker build -t priv_esc_lab .
 docker run -d -p 2222:22 -p 5000:5000 --name esc_lab priv_esc_lab
 ```
 
+
+
+
+
+
+The full Answer ⬇️
+
+
+
+
+
+
+
 ## 🎯 Lab Features
 
 - 🐍 Flask web app running as user `jerry`
